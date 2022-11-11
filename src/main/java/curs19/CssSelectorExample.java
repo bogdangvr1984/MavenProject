@@ -1,5 +1,7 @@
 package curs19;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -73,13 +75,24 @@ public class CssSelectorExample extends BaseTest{
 	}
 	
 	@Test
-	public void cssSelectorExample4() {
+	public void cssSelectorExample4() throws InterruptedException {
 		
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
 		
 		WebElement selectedOption = driver.findElement(By.cssSelector("li[class*='sc_tabs_title'][aria-selected='true']"));
 		
 		jse.executeScript("arguments[0].setAttribute('style', 'background:green; border: 4px solid black;')", selectedOption);
+		
+		//NOT
+		
+		List<WebElement> menuEntries = driver.findElements(By.cssSelector("li[class*='sc_tabs_title']:not([aria-selected='true'])"));
+		
+		for(WebElement element : menuEntries) {
+		
+			jse.executeScript("arguments[0].setAttribute('style', 'background:orange; border: 4px solid black;')", element);
+			Thread.sleep(6000);
+			
+		}
 		
 	}
 	
