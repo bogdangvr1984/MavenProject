@@ -43,30 +43,34 @@ public class XpathExample2 extends BaseTest{
 	@Test(priority = 2)
 	public void xpathExampleTest2() {
 	
-	JavascriptExecutor jse = (JavascriptExecutor) driver;
+JavascriptExecutor jse = (JavascriptExecutor) driver;
 		
-	driver.findElement(By.xpath("//span[@class='user_name']")).click();
-	//Contains --> innerHTML
-	driver.findElement(By.xpath("//a[contains(text(), 'Settings')]")).click();
-	
-	driver.findElement(By.xpath("//a[contains(text(), 'recent orders' )]")).click();
-	
-	//Contains--> attribute value
-	WebElement orderTab = driver.findElement(By.xpath("//table[contains(@class, 'woocommerce-orders-table')]/thead/tr/th/span[contains(text(), 'Order')]"));
-	jse.executeScript("arguments[0].setAttribute('style', 'background: orange; border: 4px solid green')", orderTab);
-	
-	//index
-	WebElement totalTab = driver.findElement(By.xpath("(//th[contains(@class, 'woocommerce-orders-table_header')]/span)[2]"));
-	jse.executeScript("arguments[0].setAttribute('style', 'background: orange; border: 4px solid green')", totalTab);
-	
-	//(//tr[contains(@class, 'woocommerce-orders-table__row')]/td[@data-title='Order'])[4]
-	
-	//NOT
-	WebElement orders = driver.findElement(By.xpath("//tr[contains(@class, 'woocommerce-orders-table__row')]/td[@data-title='Order']/a[contains(text(), '1688')]"));
-	
-	driver.findElement(By.xpath("//tr[contains(@class, 'woocommerce-orders-table__row')]/td[@data-title='Order']/a[contains(text(), '1688')]")).click();
-	
-	assertEquals(driver.getCurrentUrl(), "https://keybooks.ro/account/view_order/1688/");
+		driver.findElement(By.xpath("//span[@class='user_name']")).click();
+		//Contains --> innerHTML
+		driver.findElement(By.xpath("//a[contains( text(), 'Settings' )]")).click();
+		
+		driver.findElement(By.xpath("//a[contains(text(), 'order')]")).click();
+		
+		//Contains--> attribute value
+		WebElement orderTab = driver.findElement(By.xpath("//table[contains(@class, 'woocommerce-orders-table')]/thead/tr/th/span[contains(text(), 'Order')]"));
+		jse.executeScript("arguments[0].setAttribute('style', 'background:orange; border:4px solid green')", orderTab);
+
+		//index
+		WebElement totalTab = driver.findElement(By.xpath("(//th[contains(@class, 'woocommerce-orders-table__header')]/span)[2]"));
+		jse.executeScript("arguments[0].setAttribute('style', 'background:orange; border:4px solid green')", totalTab);
+
+		//(//tr[contains(@class, 'woocommerce-orders-table__row')]/td[@data-title='Order'])[4]
+		////tr[contains(@class, 'woocommerce-orders-table__row')]/td[@data-title='Order']/a[contains(text(), '1688')]
+		
+		//NOT
+		WebElement orders = driver.findElement(By.xpath("//tr[contains(@class, 'woocommerce-orders-table__row')]/td[@data-title='Order']/a[not(contains(text(), '1688'))]"));
+		jse.executeScript("arguments[0].setAttribute('style', 'background:orange; border:4px solid green')", orders);
+
+		
+		
+		driver.findElement(By.xpath("//tr[contains(@class, 'woocommerce-orders-table__row')]/td[@data-title='Order']/a[contains(text(), '1688')]")).click();
+		
+		assertEquals(driver.getCurrentUrl(), "https://keybooks.ro/account/view-order/1688/");
 	
 	
 	}
